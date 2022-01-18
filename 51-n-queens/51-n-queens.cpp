@@ -62,7 +62,7 @@ class Solution {
 public:
     //time complexity optimized
     
-    void solve(int col,int n,vector<vector<string>> &ans,vector<string> &board,vector<int> &back,vector<int> &upperdiagonal,vector<int> &lowerdiagonal){
+    void solve(int col,int n,vector<vector<string>> &ans,vector<string> &board,vector<bool> &back,vector<bool> &upperdiagonal,vector<bool> &lowerdiagonal){
         //base case
         if(col == n){
             ans.push_back(board);
@@ -93,9 +93,13 @@ public:
             board[i] = s;
         }
         //using containers instead of is safe function
-        vector<int> back(n,0);
-        vector<int> upperdiagonal(2*n-1,0);
-        vector<int> lowerdiagonal(2*n-1,0);
+        //space optimized using bool vector instead of int
+        // vector<int> back(n,0);
+        // vector<int> upperdiagonal(2*n-1,0);
+        // vector<int> lowerdiagonal(2*n-1,0);
+        vector<bool> back(n,0);
+        vector<bool> upperdiagonal(2*n-1,0);
+        vector<bool> lowerdiagonal(2*n-1,0);
         solve(0,n,ans,board,back,upperdiagonal,lowerdiagonal);
         return ans;
     }
