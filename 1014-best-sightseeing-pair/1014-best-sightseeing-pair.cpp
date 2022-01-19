@@ -1,3 +1,4 @@
+//directed by Tanay charturvedi
 class Solution {
 public:
     int maxScoreSightseeingPair(vector<int>& v) {
