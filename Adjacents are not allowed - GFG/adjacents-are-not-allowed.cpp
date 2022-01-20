@@ -11,13 +11,19 @@ class Solution{
 public:
     int maxSum(int n, vector<vector<int>> mat)
     {
-        vector<int> dp(n,0);
-        dp[0] = max(mat[0][0],mat[1][0]);
-        dp[1] = max(max(mat[0][0],mat[0][1]),max(mat[1][0],mat[1][1]));
-        for(int i=2;i<n;i++){
-            dp[i] = max(dp[i-2] + max(mat[0][i],mat[1][i]),dp[i-1]);
+        //vector<int> dp(n,0);
+        
+        int a = max(mat[0][0],mat[1][0]);
+        int b = max(max(mat[0][0],mat[0][1]),max(mat[1][0],mat[1][1]));
+        if(n==1){
+            return a;
         }
-        return dp[n-1];
+        for(int i=2;i<n;i++){
+            int c = max(a + max(mat[0][i],mat[1][i]),b);
+            a=b;
+            b=c;
+        }
+        return b;
     }
 };
 
