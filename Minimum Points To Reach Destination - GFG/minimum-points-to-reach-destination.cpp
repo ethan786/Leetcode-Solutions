@@ -10,29 +10,51 @@ class Solution{
 	
 	int minPoints(vector<vector<int>> p, int m, int n) 
 	{ 
-	    vector<vector<int>> dp(m,vector<int>(n,0));
-	    //filling last row and colume
-	    dp[m-1][n-1] = max(1,1-p[m-1][n-1]);
 	    
-	    for(int i = m-2;i>=0;i--){
-	        dp[i][n-1] = max(1,dp[i+1][n-1] - p[i][n-1]);
-	    }
-	    for(int i = n-2;i>=0;i--){
-	        dp[m-1][i] = max(1,dp[m-1][i+1] - p[m-1][i]);
+	    if(m==1 and n == 1){
+	        return max(1,1-p[m-1][n-1]);
 	    }
 	    
-	    for(int i = m-2;i>=0;i--){
-	        for(int j=n-2;j>=0;j--){
-	            dp[i][j] = max(1,(min(dp[i][j+1],dp[i+1][j]) - p[i][j]));
+	    if(n==1){
+	        int ans = max(1,1-p[m-1][0]);
+	        for(int i=m-2;i>=0;i--){
+	            ans = max(1,ans-p[i][0]);
 	        }
+	        return ans;
+	    }else if(m==1){
+	        int ans = max(1,1-p[0][n-1]);
+	        for(int i=n-2;i>=0;i--){
+	            ans = max(1,ans-p[0][i]);
+	        }
+	        return ans; 
 	    }
 	    
-	    return dp[0][0];
-	    
+      vector<int> dp(n,0);
+      
+      dp[n-1] = max(1,1-p[m-1][n-1]);
 
-	  
-	   
-	} 
+      
+      for(int i = n-2;i>=0;i--){
+          dp[i] = max(1,dp[i+1] - p[m-1][i]);
+      }
+      int prev = max(1,dp[n-1] - p[m-2][n-1]);
+    //   for(int x=0;x<n;x++){
+    //       cout<<dp[x]<<" ";
+    //     }
+    //     cout<<endl;
+      for(int i = m-2;i>=0;i--){
+        prev = max(1,dp[n-1] - p[i][n-1]);
+         dp[n-1] = prev;
+        //cout<<dp[n-1]<<" ";
+          for(int j=n-2;j>=0;j--){
+              dp[j] = max(1,(min(prev,dp[j]) - p[i][j]));
+              prev= dp[j];
+          }
+      }     
+      return dp[0];
+      
+      }
+	 
 };
 
 
