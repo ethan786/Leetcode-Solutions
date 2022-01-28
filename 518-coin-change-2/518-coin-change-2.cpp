@@ -16,7 +16,27 @@ public:
     }
     
     int change(int a, vector<int>& c) {
-        vector<vector<int>> dp(301,vector<int>(5001,-1));
-        return solve(a,c,0,dp);
+        vector<vector<int>> dp(c.size()+2,vector<int>(a+2,0));
+        
+        for(int i=0;i<c.size()+1;i++)
+        {
+            dp[i][0] = 1;
+        }
+        
+        for(int i=0;i<a+1;i++)
+        {
+            dp[0][i] = 0;
+        }
+        
+        for(int i=1;i<=c.size();i++){
+            for(int j=1;j<=a;j++){
+              if(c[i-1] > j) {
+                    dp[i][j] = dp[i-1][j];
+                } else {
+                    dp[i][j] = dp[i-1][j]+dp[i][j-c[i-1]];
+                }
+            }
+        }
+        return dp[c.size()][a];
     }
 };
