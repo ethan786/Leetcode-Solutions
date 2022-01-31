@@ -1,44 +1,41 @@
 class Solution {
 public:
-    bool CanWeTakeItOrNot(vector<vector<int>>& special, vector<int>& needs,int i){
-        int n = needs.size();
-        for(int j=0;j<n;j++){
-            if(special[i][j] > needs[j]){
-                return false;
-            }
+    
+    bool ispossible(int i,vector<vector<int>>& s, vector<int>& n){
+        for(int j=0;j<n.size();j++){
+            if(s[i][j] > n[j]) return false;
         }
         return true;
     }
     
-    int solve(int i,vector<int>& p, vector<vector<int>>& special, vector<int> &needs){
-        if(i==special.size()){
+    int solve(int i,vector<int>& p, vector<vector<int>>& s, vector<int>& n){
+        //base 
+        if(i == s.size()){
             int sum = 0;
-            for(int i=0;i<p.size();i++){
-              //cout<<p[i]<<" "<<needs[i]<<endl;
-                sum += p[i] * needs[i];
+            for(int i=0;i<n.size();i++){
+                sum += n[i] * p[i]; 
             }
-            //cout<<sum<<" ";
+            
             return sum;
         }
-        if(CanWeTakeItOrNot(special,needs,i)){
-            for(int j=0;j<needs.size();j++){
-                //cout<<needs[j]<<" "<<special[i][j]<<endl;
-                needs[j] = needs[j] - special[i][j];
-               // cout<<needs[j]<<" ";
+        if(ispossible(i,s,n)){
+            for(int j=0;j<n.size();j++){
+                n[j] -= s[i][j];
             }
-            int op1 = special[i][special[0].size()-1] + solve(i,p,special,needs);
-            for(int j=0;j<needs.size();j++){
-                needs[j] += special[i][j];
+            int op1 = s[i][s[0].size()-1] + solve(i,p,s,n);
+            
+            for(int j=0;j<n.size();j++){
+                n[j] += s[i][j];
             }
-            int op2 = solve(i+1,p,special,needs);
-            //cout<<op1<<" "<<op2<<endl;
+            int op2 = solve(i+1,p,s,n);
             return min(op1,op2);
         }else{
-            return solve(i+1,p,special,needs);
+            return solve(i+1,p,s,n);
         }
     }
     
-    int shoppingOffers(vector<int>& p, vector<vector<int>>& special, vector<int>& needs) {
-        return solve(0,p,special,needs);
+    int shoppingOffers(vector<int>& p, vector<vector<int>>& s, vector<int>& n) {
+        
+        return solve(0,p,s,n);
     }
 };
