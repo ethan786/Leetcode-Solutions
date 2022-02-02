@@ -8,7 +8,7 @@ public:
         }
     }
     return false;
-}
+    }
     
     
     bool wordBreak(string s, vector<string>& b) {
