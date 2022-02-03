@@ -1,6 +1,7 @@
 class Solution {
 public:
     int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+        //bc first attempt aur best approach daddy bolte
         int n = nums1.size();
         unordered_map<int,int> m;
         for(int i=0;i<n;i++){
