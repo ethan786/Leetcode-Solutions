@@ -65,9 +65,15 @@ public:
             return s.substr(start,len);
         }
     
+    //Now comes the better approach 
+    //instead of checking ends of substring and the 
+    //depending on smallersubstring using dp
+    //we can start from the centre and then spread out
     
     
-    
+    // string longestPalindrome(string s){
+    //     //sunday this approach
+    // }
     
     
     
