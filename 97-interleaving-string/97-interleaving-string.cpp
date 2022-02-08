@@ -7,7 +7,7 @@ public:
             return (p1 == l1 and p2 == l2);
         }
         //unique making
-        string key = to_string(p1)+"*"+to_string(p2)+"*"+to_string(p3);
+        string key = to_string(p1)+to_string(p2)+to_string(p3);
         if(m.find(key) != m.end()) return m[key];
         
         if(p1 == l1){
