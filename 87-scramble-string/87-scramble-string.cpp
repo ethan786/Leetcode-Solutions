@@ -1,40 +1,49 @@
 class Solution {
 public:
-    
-    unordered_map<string,bool> mp;
-    
-    bool check(string a, string b){
-        string key = a + " " + b;
-        if (mp.find(key) != mp.end()) return mp[key];
-        if(a==b) return mp[key]=true;
-        if(a.length()<=1 || b.length()<=1) return mp[key]=false;
-        int sum1=0;
-        int sum2=0;
-        for(int i=0; i<a.length(); i++){
-            sum1=sum1+int(a[i]);
-        }
-        for(int i=0; i<b.length(); i++){
-            sum2=sum2+int(b[i]);
-        }
-        if(sum1!=sum2) return mp[key]=false;
-        
-        int n=a.length();
-        for(int i=1; i< a.length(); i++){
-            if( check(a.substr(0,i),b.substr(0,i)) && check(a.substr(i,n-i),b.substr(i,n-i)) ){
-                 return true;
-                 break;
-             }
-            if( check(a.substr(0,i),b.substr(n-i,i)) && check(a.substr(i,n-i),b.substr(0,n-i))) {
-                 return true;
-                 break;
-             }
-        }
-        return mp[key]=false;
-        
-    }
-    
     bool isScramble(string s1, string s2) {
-        if(s1.length()!=s2.length()) return false;        
-        return check(s1,s2);
+        int n = s1.size();
+        vector<vector<vector<bool>>> dp(n+1,vector<vector<bool>>(n+1,vector<bool>(n+1)));
+        
+        //dp[i][j][l] represent s1[i.....i+l-1] is scrambled string of s2[j.....j+l-1] or not
+        //s1="great" and s2="rgeat"
+        //eg->dp[0][0][2] means s1[0-1]("gr") is scrambled string of s2[0-1]("rg") or not
+        //l - length
+        
+        for(int l = 1; l <= n; l++){
+            for(int i = 0; i + l - 1 < n; i++){
+                for(int j = 0; j + l - 1 < n; j++){
+                    if(l == 1){
+                        //if length of string is one then we can manually check 
+                        //that are both character of string are equal or not
+                        dp[i][j][l] = s1[i] == s2[j];
+                    }else{
+                        //partioning
+                        for(int gap = 1; gap < l; gap++){
+                            int endgap = l - gap;
+                            //here two case
+                            //i--- --------- 
+                            //j--- ---------
+                            
+                            //i--- ---------   
+                            //j--------- ---
+                            dp[i][j][l] = dp[i][j][l] | (dp[i][j][gap] and dp[i+gap][j+gap][endgap]);
+                            dp[i][j][l] = dp[i][j][l] | (dp[i][j+endgap][gap] and dp[i+gap][j][endgap]);
+                        }
+                    }
+                }
+            }
+        }
+        return dp[0][0][n];
     }
 };
+// great
+// rgeat
+// g reat
+// r geat
+// gr eat
+// rg eat
+// gre at
+
+// grea t
+// g r
+// r g
