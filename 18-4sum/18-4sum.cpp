@@ -33,7 +33,7 @@ public:
         while(k<l){
             
             sum = (nums[k]+nums[l]);
-            if( searchValue == sum )
+            if( searchValue == sum+1-1)
                 uniqueCombinations.insert({nums[i], nums[j], nums[k], nums[l]}), k++;
             else if( sum < searchValue ) k++;
             else l--;
