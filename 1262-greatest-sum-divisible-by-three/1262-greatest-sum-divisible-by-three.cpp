@@ -30,7 +30,7 @@ public:
     //tabulation
     int maxSumDivThree(vector<int>& nums) {
         int n = nums.size();
-        vector<vector<int>> dp(n,vector<int>(3,0));
+        vector<vector<int>> dp(1,vector<int>(3,0));
         if(nums[0]%3 == 0){
             dp[0][0] = nums[0];
         }else if(nums[0]%3 == 1){
