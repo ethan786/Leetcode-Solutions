@@ -41,7 +41,7 @@ public:
         op2 = solve(i+1,w,s,v);
         if(isPossible(w[i],v)){
             op1 = sum(w[i],s) + solve(i+1,w,s,v);
-        fillmap(w[i],v);
+            fillmap(w[i],v);
         }
         return max({op1,op2});
     }
