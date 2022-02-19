@@ -1,6 +1,6 @@
+    unordered_map<int,int> dp;
 class Solution {
 public:
-    unordered_map<int,int> dp;
     int ways(int n){
         if(n == 1){
             return 0;
