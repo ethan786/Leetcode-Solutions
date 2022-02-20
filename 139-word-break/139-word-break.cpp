@@ -1,5 +1,5 @@
 class Solution {
-public:
+    public:
     
     bool ispresent(string& find,vector<string> &b){
     for(auto i : b){
@@ -9,7 +9,6 @@ public:
     }
     return false;
     }
-    
     
     bool wordBreak(string s, vector<string>& b) {
         int n = s.size();
