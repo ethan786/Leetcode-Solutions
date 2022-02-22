@@ -6,20 +6,16 @@ using namespace std;
 class Solution {
 public:
     
-    bool bfs(int i,vector<int>& color,vector<int> adj[]){
-        queue<int> q;
-        q.push(i);
-        color[i] = 1;
-        while(!q.empty()){
-            int node = q.front();
-            q.pop();
-            for(auto it : adj[node]){
-                if(color[it] == -1){
-                    color[it] = 1-color[node];
-                    q.push(it);
-                }else if(color[it] == color[node]){
+    bool dfs(int i,vector<int>& color,vector<int> adj[]){
+        if(color[i] == -1) color[i] = 1;
+        for(auto it : adj[i]){
+            if(color[it] == -1){
+                color[it] = (color[i] == 0) ? 1 : 0;
+                if(!dfs(it,color,adj)){
                     return false;
                 }
+            }else if(color[it] == color[i]){
+                return false;
             }
         }
         return true;
@@ -29,7 +25,7 @@ public:
 	    vector<int> color(n,-1);
 	    for(int i=0;i<n;i++){
 	        if(color[i] == -1){
-	            if(!bfs(i,color,adj)){
+	            if(!dfs(i,color,adj)){
 	                return false;
 	            }
 	        }
