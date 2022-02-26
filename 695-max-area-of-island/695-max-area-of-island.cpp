@@ -1,6 +1,8 @@
 class Solution {
 public:
     int c = 0;
+    int dx[4] = {1,-1,0,0};
+    int dy[4] = {0,0,1,-1};
     void dfs(int i,int j,vector<vector<int>>& g,int n,int m){
         if(i < 0 || j < 0 || i > n-1 || j > m-1){
             return;
@@ -10,10 +12,13 @@ public:
         }
         g[i][j] = 2;
         c++;
-        dfs(i+1,j,g,n,m);
-        dfs(i,j-1,g,n,m);
-        dfs(i-1,j,g,n,m);
-        dfs(i,j+1,g,n,m);
+        for(int x=0;x<4;x++){
+            dfs(i+dx[x],j+dy[x],g,n,m);
+        }
+        // dfs(i+1,j,g,n,m);
+        // dfs(i,j-1,g,n,m);
+        // dfs(i-1,j,g,n,m);
+        // dfs(i,j+1,g,n,m);
     }
     
     int maxAreaOfIsland(vector<vector<int>>& g) {
