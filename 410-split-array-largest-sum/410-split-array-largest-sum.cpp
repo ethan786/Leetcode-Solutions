@@ -2,42 +2,43 @@ class Solution {
 public:
     
     bool isPossible(int mid,vector<int>& a,int m){
-        int sum = 0;
+        int currSum = 0;
         int count = 1;
         int n = a.size();
         for(int i=0;i<n;i++){
-            sum += a[i];
-            if(sum > mid){
-                sum = a[i];
+            currSum += a[i];
+            if(currSum > mid){
+                currSum = a[i];
                 count++;
-            if(count > m){
-                return false;
-            }
-            }
-            //cout<<sum<<" "<<count<<" "<<mid<<endl;
+                if(count > m){
+                    return false;
+                }
+            } 
         }
         return true;
     }
-    
+
     int splitArray(vector<int>& a, int m) {
         int sum = 0;
         int maxElement = -1;
+        
         for(auto &i : a){
             sum += i;
             maxElement = max(maxElement,i);
         }
-        int l = maxElement,r = sum;
+        
+        int left = maxElement,right = sum;
+        
         //binarySearch
-        while(l <= r){ // = case?
-            int mid = l + (r-l)/2;
+        while(left <= right){
+            int mid = left + (right-left)/2;
             if(isPossible(mid,a,m)){
-                r = mid - 1;
+                right = mid - 1;
             }else{
-                l = mid + 1;
+                left = mid + 1;
             }
         }
-        return l;
+        
+        return left;
     }
 };
-//42 10
-//22
