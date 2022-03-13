@@ -13,7 +13,7 @@ public:
             //cout<<v[s[i]-'a']<<" ";
             if(v[s[i]-'a'] == false){
                 while(st.size() > 0 && st.top() > s[i] && i < lastOcc[st.top()-'a']){
-                    cout<<"suar";
+                    //cout<<"suar";
                     v[st.top()-'a'] = false;
                     st.pop();
                 }
