@@ -13,6 +13,7 @@ public:
             for(int j=0;j<m;j++){
                 int mx = INT_MAX;
                 for(int k=0;k<m;k++){
+                    
                     if(k == j) continue;
                     mx = min(mx,dp[i-1][k]);
                 }
