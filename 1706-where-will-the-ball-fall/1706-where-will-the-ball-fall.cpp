@@ -5,17 +5,15 @@ public:
         if(i == n){
             return j;
         }
-        if(g[i][j] == 1 and j == m-1){
+        if(g[i][j] == 1){
+            if(j == m-1 || (j+1 < m and g[i][j] != g[i][j+1]))
             return -1;
         }
-        if(g[i][j] == -1 and j == 0){
+        if(g[i][j] == -1){
+            if(j == 0 || (j > 0 and g[i][j] != g[i][j-1]))
             return -1;
         }
-        if(g[i][j] == 1 and j+1 < m and g[i][j] != g[i][j+1]){
-            return -1;
-        }else if(g[i][j] == -1 and j > 0 and g[i][j] != g[i][j-1]){
-            return -1;
-        }
+        
         if(g[i][j] == 1){
             return solve(i+1,j+1,g,n,m);
         }else{
