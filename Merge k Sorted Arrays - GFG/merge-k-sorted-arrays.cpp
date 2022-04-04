@@ -21,7 +21,8 @@ class Solution
     //Function to merge k sorted arrays.
     vector<int> mergeKArrays(vector<vector<int>> arr, int K)
     {
-        vector<int>v;
+       
+    vector<int>v;
        priority_queue<int,vector<int>,greater<int>>p;
        for(int i=0;i<K;i++)
        {
