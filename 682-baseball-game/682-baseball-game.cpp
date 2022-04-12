@@ -1,40 +1,26 @@
 class Solution {
 public:
-    int calPoints(vector<string>& ops) {
-	
-        stack<int> points;
-		
-        int length=ops.size(),temp1,temp2,ans=0;
-		
-        for(int i=0;i<length;i++){
-		
-            if(ops[i]=="C")
-                points.pop();
-				
-            else if(ops[i]=="D")
-                points.push(points.top()*2);
-				
-            else if(ops[i]=="+"){
-                temp1=points.top();
-                points.pop();
-                temp2=points.top();
-                points.push(temp1);
-                points.push(temp1+temp2);
+        int calPoints(vector<string>& ops) {
+        vector<int> rounds;
+        int lastIndex=0;
+        
+        for(string str : ops){
+            if(isdigit(str[0]) || str[0] == '-'){
+                rounds.push_back(std::stoi(str));
             }
-			
-            else{
-                temp1=stoi(ops[i]);
-                points.push(temp1); 
+            else if(str[0] == '+'){
+                rounds.push_back(rounds[lastIndex]+rounds[lastIndex-1]);
             }
-			
+            else if(str[0] == 'D'){
+                rounds.push_back(2*rounds[lastIndex]);
+            }
+            else if(str[0] == 'C'){
+                rounds.pop_back();
+            }
+            
+            lastIndex = rounds.size()-1;
         }
-        while(points.size()>0){
-		
-            ans=points.top()+ans;
-            points.pop();
-			
-        }
-		
-        return ans;        
+        
+        return accumulate(rounds.begin(), rounds.end(),0); // calculates sum of vector
     }
 };
