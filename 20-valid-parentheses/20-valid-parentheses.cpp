@@ -14,7 +14,6 @@ public:
                 st.pop();
             }
         }
-        return st.size() == 0 ? true : false;
-        
+        return st.size() == 0 ? true : false; 
     }
 };
