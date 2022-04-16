@@ -5,9 +5,6 @@ public:
         if(n == 1){
             return 0;
         }
-        if(n == 2){
-            return (a[0] > a[1] ? 0 : 1);
-        }
         for(int i = 0;i<n-1;i++){
             if(i == 0 and a[0] > a[1]){
                 return i;
