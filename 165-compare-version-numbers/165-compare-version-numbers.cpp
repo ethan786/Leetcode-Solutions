@@ -1,25 +1,35 @@
 class Solution {
 public:
-    int compareVersion(string version1, string version2) {
-        int n1=version1.length(),n2=version2.length();
-        int num1=0,num2=0;
-        int i=0,j=0;
-        while(i<n1 || j<n2){
-            while(i<n1 && version1[i]!='.'){
-                num1=10*num1+(version1[i]-'0');
-                i++;
-            }
-            while(j<n2 && version2[j]!='.'){
-                num2=10*num2+(version2[j]-'0');
-                j++;
-            }
-            if(num1<num2) return -1;
-            else if(num1>num2) return 1;
-            else{
-                i++;
-                j++;
-                num1=0;
-                num2=0;
+    vector<int> splitToNums(string s) {
+        if(s.size()==0) return {};
+        vector<int>res;
+        
+        int start = 0, end = s.find("."); 
+        while (end != -1) {
+            string temp = s.substr(start, end - start); //spliting the string by '.'
+            res.push_back(stoi(temp));  // converting to num and pushing in array
+            start = end + 1;   // updating start and end index for next split
+            end = s.find(".", start); 
+        }
+        string last = s.substr(start, end - start); // last version
+        res.push_back(stoi(last));
+        return res;
+    }
+    int compareVersion(string v1, string v2) {
+        vector<int>A = splitToNums(v1);
+        vector<int>B = splitToNums(v2);
+        int m = A.size(), n = B.size(), i=0;
+        
+        for(int i=0; i<m || i<n; i++) {
+            if(i<m && i<n) {
+                if(A[i]==B[i]) continue;
+                return A[i]<B[i] ? -1 : 1; 
+            } 
+            else if(i < m && A[i] != 0) {
+                return  1; // v1 greater
+            } 
+            else if(i<n && B[i] != 0 ){
+                return -1; // v2 is greater
             }
         }
         return 0;
