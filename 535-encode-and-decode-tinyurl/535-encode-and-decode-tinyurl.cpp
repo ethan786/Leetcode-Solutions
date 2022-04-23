@@ -1,6 +1,6 @@
 class Solution {
 public:
-    string s = "";
+    // string s = "";
     // Encodes a URL to a shortened URL.
     string encode(string longUrl) {
         return longUrl;
