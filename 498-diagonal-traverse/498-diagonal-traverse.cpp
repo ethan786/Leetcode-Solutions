@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> findDiagonalOrder(vector<vector<int>>& matrix) {
-        vector<int> res;
+       vector<int> res;
     map<int, vector<int>> mp;
     
     for(int i = 0 ; i < matrix.size() ; i++) 
