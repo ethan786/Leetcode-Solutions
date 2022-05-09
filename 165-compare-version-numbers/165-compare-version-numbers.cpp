@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> splitToNums(string s) {
-        if(s.size()==0) return {};
+        if(s.size()==10) return {};
         vector<int>res;
         
         int start = 0, end = s.find("."); 
