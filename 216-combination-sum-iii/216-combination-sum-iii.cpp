@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<vector<int>> ans;
     int sum = 0;
-    void solve(int i, int k, int n, vector<int>& vis,vector<int>& com){
+    void solve(int i, int k, int n, vector<int>& com){
         //base case
         if(com.size() > k || sum > n || i > 10) return;
         if(i == 10){
@@ -12,21 +12,21 @@ public:
             return;
         }
         
-        vis[i] = 1;
+        //vis[i] = 1;
         com.push_back(i);
         sum += i;
-        solve(i+1,k,n,vis,com);
-        vis[i] = 0;
+        solve(i+1,k,n,com);
+        //vis[i] = 0;
         com.pop_back();
         sum -= i;
-        solve(i+1,k,n,vis,com);
+        solve(i+1,k,n,com);
         
     }
     
     vector<vector<int>> combinationSum3(int k, int n) {
-        vector<int> vis(10,0);
+        //vector<int> vis(10,0);
         vector<int> com;
-        solve(1,k,n,vis,com);
+        solve(1,k,n,com);
         return ans;
     }
 };
