@@ -8,31 +8,26 @@ class Solution
 	public:
 	//Function to return list containing vertices in Topological order. 
 	
-	void topoSortdfs(int src, vector<bool> &vis, stack<int> & s, vector<int> adj[]) {
+	void topoSortdfs(int src, vector<bool> &vis, vector<int> &ans, vector<int> adj[]) {
     	vis[src] = true;
     	for(auto &node : adj[src]) {
     		if(!vis[node]){
-    			topoSortdfs(node,vis,s,adj);
+    			topoSortdfs(node,vis,ans,adj);
     		}
     	}
-    	s.push(src);
+    	ans.push_back(src);
     }
 
 	
 	vector<int> topoSort(int n, vector<int> adj[]) 
 	{
 	    vector<bool> vis(n,false);
-    	stack<int> s;
-    
+    	vector<int> ans;
     	for(int i=0;i<n;i++){
     		if(!vis[i])
-    			topoSortdfs(i,vis,s,adj);
+    			topoSortdfs(i,vis,ans,adj);
 	    }
-	    vector<int> ans;
-	    while(!s.empty()) {
-	        ans.push_back(s.top());
-	        s.pop();
-	    }
+	    reverse(ans.begin(),ans.end());
     	return ans;
 	}
 };
