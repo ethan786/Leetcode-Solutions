@@ -17,7 +17,7 @@ public:
       
         for(int k=0;k<4;k++){
                 dfs(grid1,grid2,i+dx[k],j+dy[k]);
-            }
+        }
 
     }
 
