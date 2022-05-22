@@ -1,12 +1,25 @@
 class Solution {
 public:
-    int countSubstrings(string S) {
-        int len = S.length(), ans = 0;
-        for (int i = 0; i < len; i++) {
-            int j = i - 1, k = i;
-            while (k < len - 1 && S[k] == S[k+1]) k++;
-            ans += (k - j) * (k - j + 1) / 2, i = k++;
-            while (~j && k < len && S[k++] == S[j--]) ans++;
+    
+    int countSubstrings(string s) {
+        int n = s.size(), ans = 0;
+        vector<vector<bool>> dp(n,vector<bool>(n,false));
+        
+        for(int gap = 0; gap < n; ++gap) {
+            for(int i = 0, j = gap; j < n; ++i, ++j) {
+                if(gap == 0) {
+                    dp[i][j] = true;
+                }else if(gap == 1) {
+                    if(s[i] == s[j]) {
+                        dp[i][j] = true;
+                    }
+                }else{
+                    if(s[i] == s[j]) {
+                        dp[i][j] = dp[i+1][j-1];
+                    }
+                }
+                if(dp[i][j]) ans++;
+            }
         }
         return ans;
     }
