@@ -12,6 +12,8 @@ public:
         return os - sum;
     }
     */
+    /*
+    bit manipulation
     int missingNumber(vector<int>& a) {
         int ans = 0;
         for(int i = 0; i < a.size(); ++i) {
@@ -19,4 +21,14 @@ public:
         }
         return ans^a.size();
     }
+    */
+    
+    // sum of index - sum of num
+    int missingNumber(vector<int>& nums) {
+        int sum=0,n=nums.size(),sum_n=0;
+        for(int i=0;i<n; i++) sum+=nums[i];
+        for(int i=1;i<=n;i++) sum_n+=i;
+        return sum_n-sum;
+    }
+    
 };
