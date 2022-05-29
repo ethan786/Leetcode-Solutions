@@ -7,30 +7,29 @@ class Solution {
   public:
     // Function to detect cycle in a directed graph.
     bool ans;
-    void dfs(int i,int par,vector<int> adj[],vector<int> &color){
-        color[i] = 1;//grey
-        for(auto it : adj[i]){
-            if(color[it] == 1){
+    
+    void dfs(int i, int par, vector<int> &color, vector<int> adj[]) {
+        color[i] = 1; //grey
+        //cout<<i<<endl;
+        for(auto it : adj[i]) {
+            if(color[it] == 1) {
                 ans = true;
             }
-            if(color[it] == 0){ //white
-                dfs(it,i,adj,color);
+            if(color[it] == 0) {
+                dfs(it,i,color,adj);
             }
         }
-        color[i] = 2;//black
-        //return false;
+        color[i] = 2; // black
     }
     
     bool isCyclic(int n, vector<int> adj[]) {
         vector<int> color(n,0);
         ans = false;
-        for(int i=0;i<n;i++){
-            if(color[i] == 0){
-                dfs(i,-1,adj,color);
+        for(int i = 0; i < n; i++) {
+            if(color[i] == 0) {
+                dfs(i,-1,color,adj);
             }
-            if(ans){
-                return true;
-            }
+            if(ans) return true;
         }
         return ans;
     }
