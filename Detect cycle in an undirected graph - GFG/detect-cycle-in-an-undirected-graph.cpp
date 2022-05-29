@@ -17,7 +17,7 @@ class Solution {
                 return true;
             }
         }
-        return false;
+        // return false;
     }
     
     bool isCycle(int n, vector<int> adj[]) {
