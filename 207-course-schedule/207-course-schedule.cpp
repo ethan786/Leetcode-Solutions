@@ -20,26 +20,23 @@ public:
                 q.emplace(i);
             }
         }
-        // cout<<c<<endl;
         vector<int> vis(n,0);
-        if(q.empty()) return false;
-        // vis[q.front()] = 1;
         while(!q.empty()) {
             int node = q.front();
             q.pop();
-            // cout<<node<<" ";
             for(auto &i : adj[node]) {
                 if(!vis[i]) {
                     in[i]--;
                     if(in[i] == 0) {
                         vis[i] = 1;
-                        q.emplace(i);
+                        q.push(i);
                         c++;
                     }
                 }
             }
         }
-        // cout<<c<<endl;
+        
         return c == n;
+        
     }
 };
