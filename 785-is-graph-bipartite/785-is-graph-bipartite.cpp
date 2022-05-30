@@ -1,29 +1,28 @@
 class Solution {
 public:
-    
-    bool dfs(int i,int c, vector<int> &color, vector<vector<int>> &a) {
-        color[i] = c;
-        for(auto &node : a[i]) {
-            if(color[node] == 0) {
-                if(!dfs(node,3-c,color,a)) return false;
-            }else if(color[node] == color[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
     bool isBipartite(vector<vector<int>>& a) {
         int n = a.size();
         vector<int> color(n,0);
-        // 0 -> not visited, 1 -> Red color, and 2 -> blue color
-        bool flag = true;
-        for(int i = 0; i < n; i++) {
+        
+        for(int i = 0; i < n; ++i) {
             if(color[i] == 0) {
-                flag = dfs(i,1,color,a);
+                queue<int> q;
+                q.push(i);
+                color[i] = 1;
+                while(!q.empty()) {
+                    int node = q.front();
+                    q.pop();
+                    for(auto &nbr : a[node]) {
+                        if(color[nbr] == 0) {
+                            color[nbr] = 3 - color[node];
+                            q.push(nbr);
+                        }else if(color[nbr] == color[node]) {
+                            return false;
+                        }
+                    }
+                }
             }
-            if(!flag) return false;
         }
-        return flag;
+        return true;
     }
 };
