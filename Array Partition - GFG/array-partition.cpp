@@ -9,25 +9,26 @@ using namespace std;
 
 class Solution{
     public:
-    bool helper(int ind, int k, int m, vector<int>& A, vector<int>& dp){
+    bool solve(int ind, int k, int m, vector<int>& A, vector<int>& dp){
         bool flag = false;
         if(ind <= -1) return true;
         if(dp[ind] != -1) return dp[ind];
         for(int i = ind - k + 1; i >= 0 && A[ind] - A[i] <= m; i--){
-            flag = flag | helper(i - 1, k, m, A, dp);
+            flag = flag | solve(i - 1, k, m, A, dp);
             if(flag == true){
                 break;
             }
         }
-        dp[ind] = flag ? 1 : 0;
+        dp[ind] = flag;
         return flag;
     }
-    bool partitionArray(int N, int K, int M, vector<int> &A){
+    bool partitionArray(int n, int K, int M, vector<int> &A){
         sort(A.begin(), A.end());
-        vector<int> dp(N, -1);
-        helper(N - 1, K, M, A, dp);
-        return dp[N - 1];
+        vector<int> dp(n, -1);
+        solve(n - 1, K, M, A, dp);
+        return dp[n - 1];
     }
+     // 1 2 3 8 9
 };
 
 // { Driver Code Starts.
