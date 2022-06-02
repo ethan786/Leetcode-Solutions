@@ -25,8 +25,8 @@ class Solution{
                 break;
             }
         } 
-        dp[ind] = flag;
-        return flag;
+
+        return dp[ind] = flag;
     }
     bool partitionArray(int n, int k, int m, vector<int> &a){
         sort(a.begin(), a.end());
