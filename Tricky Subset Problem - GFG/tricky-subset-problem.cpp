@@ -9,30 +9,28 @@ using namespace std;
 
 class Solution{
 public:
-       int isPossible(long long S, long long N, long long X, long long A[])
+    int isPossible(long long s, long long n, long long x, long long a[])
     {
-        int i = 0;
-        long long s = S;
-        for(; i < N; i++){
-            A[i] += s;
-            s += A[i];
-            if(s > X){
-               break;
+        long long sum = s;
+        vector<long long> v(n+1);
+        v[0] = s;
+        long long i = 1;
+        for(i = 1; i <= n && sum <= x; i++) {
+            v[i] = sum + a[i-1];
+            sum += v[i];
+        }
+        
+        for(; i >= 0; i--) {
+            if(x >= v[i]) {
+                x -= v[i];
             }
         }
-        if(s == X){
-           return true;
+        
+        if(x == 0) {
+            return 1;
         }
-        while(X >= 0 && i >= 0){
-            if(X >= A[i]){
-                X -= A[i];
-            }
-            if(X == 0 || X - S == 0){
-                return true;
-            }
-            i--;
-        }
-        return false;
+        
+        return 0;
     }
 };
 
