@@ -1,6 +1,6 @@
 class Solution {
 public:
-    
+    // time taken - 1 hour
     int count(vector<int>& a, int k) {
         int ans = 0, n = a.size(), i = 0, j = 0;
         unordered_map<int,int> m;
