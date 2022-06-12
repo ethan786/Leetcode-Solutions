@@ -1,5 +1,6 @@
 class Solution {
 public:
+    // time taken - 3:48
     int maximumUniqueSubarray(vector<int>& a) {
         int n = a.size(), i = 0, j = 0, ans = -1, sum = 0;
         unordered_map<int,int> m;
