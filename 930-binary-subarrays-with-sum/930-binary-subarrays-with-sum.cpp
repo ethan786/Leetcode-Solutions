@@ -1,17 +1,21 @@
 class Solution {
 public:
-    
-    int numSubarraysWithSum(vector<int>& a, int g) {
-        int n = a.size(), ans = 0;
-        map<int,int> m;
-        int p = 0;
-        m[0] = 1;
-        for(int i = 0; i < n; i++) {
-            p += a[i];
-            // cout<<p<<" "<<g-p<<" "<<m[g-p]<<endl;
-            ans += m[p-g];
-            m[p]++;
+    int c(vector<int>& a, int g) {
+        int sum = 0;
+        int ans = 0;
+        int i = 0, j = 0;
+        while(i < a.size()) {
+            sum += a[i];
+            while(sum >= g and j <= i) {
+                sum -= a[j];
+                j++;
+            }
+            ans += (i - j + 1);
+            i++;
         }
         return ans;
+    }
+    int numSubarraysWithSum(vector<int>& a, int g) {
+        return c(a,g+1) - c(a,g);
     }
 };
