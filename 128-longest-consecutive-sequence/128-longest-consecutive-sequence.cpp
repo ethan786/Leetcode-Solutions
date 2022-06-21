@@ -7,7 +7,7 @@ public:
             s.insert(i);
         }
         
-        int ans = INT_MIN;
+        int ans = 1;
         
         for(auto &i : a) {
             int c = 0;
