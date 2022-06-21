@@ -1,29 +1,30 @@
 class Solution {
 public:
-    vector<vector<int>> ans;
-    void solve(int i,vector<int>&c,int t,vector<int> &v){
-        
-        if(t<0) return;
-        
-        if(i == c.size()){
-            if(t == 0){
-                ans.push_back(v);
+    
+    set<vector<int>> s;
+    
+    void solve(int i, vector<int> &a, int t,vector<int> &v) {
+        if(t < 0) return;
+        if(a.size() == i) {
+            if(t == 0) {
+                s.insert(v);
             }
             return;
         }
-        t -= c[i];
-        if(t >= 0){
-        v.push_back(c[i]);
-        solve(i,c,t,v);
+        t -= a[i];
+        v.push_back(a[i]);
+        solve(i,a,t,v);
         v.pop_back();
-        }
-        t += c[i];
-        solve(i+1,c,t,v);
+        t += a[i];
+        solve(i+1,a,t,v);
+        
     }
     
-    vector<vector<int>> combinationSum(vector<int>& c, int t) {
+    vector<vector<int>> combinationSum(vector<int>& a, int t) {
+        vector<vector<int>> ans;
         vector<int> v;
-        solve(0,c,t,v);
+        solve(0,a,t,v);
+        for(auto &i : s) ans.push_back(i);
         return ans;
     }
 };
