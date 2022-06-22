@@ -7,14 +7,16 @@ public:
         }else if(n == 2) {
             return max(a[0], a[1]);
         }
-        vector<int> dp(n+1,0);
-        dp[0] = a[0];
-        dp[1] = max(a[0],a[1]);
+        // vector<int> dp(n+1,0);
+        int d = a[0];
+        int b = max(a[0],a[1]);
 
         for(int i = 2; i < n; i++) {
-            dp[i] = max(dp[i-1], dp[i-2] + a[i]);
+            int c = max(b, d + a[i]);
+            d = b;
+            b = c;
         }
 
-        return dp[n-1];
+        return b;
     }
 };
