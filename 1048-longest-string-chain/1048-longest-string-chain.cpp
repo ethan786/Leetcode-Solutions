@@ -1,19 +1,35 @@
 class Solution {
 public:
-    int longestStrChain(vector<string> &words) {
-        unordered_map<string, int> dp;
-        int res = 1;
-        sort(words.begin(), words.end(), [](const string &l, const string &r) { return l.size() < r.size(); });
-        for (string word : words) {
-            dp[word] = 1;
-            for (int i = 0; i < word.size(); i++) {
-                string prev = word.substr(0, i) + word.substr(i + 1);
-                if (dp.find(prev) != dp.end()) {
-                    dp[word] = dp[prev] + 1;
-                    res = max(res, dp[word]);
-                }
+    bool check(string &a, string &b) {
+        int i = 0, j = 0;
+        if(b.size() + 1 != a.size()) return false;
+
+        while(i < a.size()) {
+            if(a[i] == b[j]) {
+                i++;j++;
+            }else {
+                i++;
             }
         }
-        return res;
+        return i == a.size() and j == b.size();
+    }
+
+    int longestStrChain(vector<string> &a)
+    {
+        int n = a.size(), ans = 1;
+
+        sort(a.begin(), a.end(), [&](string &x, string &y){
+            return x.size() < y.size();
+        });
+        vector<int> dp(n,1);
+        for(int i = 0; i < n; i++) {
+            for(int j = i-1; j >= 0; j--) {
+                if(check(a[i],a[j]) and dp[i] < dp[j] + 1) {
+                    dp[i] = dp[j] + 1;
+                } 
+            }
+            ans = max(ans, dp[i]);
+        }
+        return ans;
     }
 };
