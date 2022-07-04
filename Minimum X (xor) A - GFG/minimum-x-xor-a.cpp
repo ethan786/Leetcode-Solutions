@@ -8,31 +8,35 @@ using namespace std;
 // User function Template for C++
 
 class Solution {
- public:
-   int minVal(int a, int b) {
-       int cnt=0;
-       for(int i=0;i<32;i++){
-           if(b&(1<<i)){
-               cnt++;
-           }
-       }
-       int ans=0;
-       for(int i=31;i>=0;i--){
-           if(cnt==0) break;
-           
-           if(a&(1<<i)){
-               ans+=((int)pow(2,i));
-               cnt--;
-           }
-       }
-       for(int i=0;i<32 && cnt>0;i++){
-           if(!(a&(1<<i))){
-               ans+=((int)pow(2,i));
-               cnt--;
-           }
-       }
-       return ans;
-   }
+  public:
+    
+    int count(int n) {
+        int c = 0;
+        while (n) {
+            n &= (n - 1);
+            c++;
+        }
+        return c;
+    }
+    
+    int minVal(int a, int b) {
+        int cb = count(b);
+        int ans = 0;
+        for(int i = 31; i >= 0; i--) {
+            if((a & (1<<i)) and cb) {
+                ans += (1<<i);
+                cb--;
+            }
+        }
+        
+        for(int i = 0; i < 32 and cb > 0; i++) {
+            if(!(a & (1<<i))) {
+                ans += (1 << i);
+                cb--;
+            } 
+        }
+        return ans;
+    }
 };
 
 
