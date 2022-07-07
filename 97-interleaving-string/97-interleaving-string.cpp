@@ -7,20 +7,20 @@ public:
             return (p1 == l1 and p2 == l2);
         }
         //unique making
-        string key = to_string(p1)+to_string(p2)+to_string(p3);
+        string key = to_string(p1)+"*"+to_string(p2)+"*"+to_string(p3);
         if(m.find(key) != m.end()) return m[key];
         
-        if(p1 == l1){
-            return m[key] = s2[p2] == s3[p3] ? solve(s1,s2,s3,l1,l2,l3,p1,p2+1,p3+1) : false;
-        }
-        if(p2 == l2){
-            return m[key] = s1[p1] == s3[p3] ? solve(s1,s2,s3,l1,l2,l3,p1+1,p2,p3+1) : false;
-        }
+        // if(p1 == l1){
+        //     return m[key] = s2[p2] == s3[p3] ? solve(s1,s2,s3,l1,l2,l3,p1,p2+1,p3+1) : false;
+        // }
+        // if(p2 == l2){
+        //     return m[key] = s1[p1] == s3[p3] ? solve(s1,s2,s3,l1,l2,l3,p1+1,p2,p3+1) : false;
+        // }
         bool op1 = false,op2 = false;
-        if(s1[p1] == s3[p3]){
+        if(p1 < s1.size() and s1[p1] == s3[p3]){
             op1 = solve(s1,s2,s3,l1,l2,l3,p1+1,p2,p3+1);
         }
-        if(s2[p2] == s3[p3]){
+        if(p2 < s2.size() and s2[p2] == s3[p3]){
             op2 = solve(s1,s2,s3,l1,l2,l3,p1,p2+1,p3+1);
         }
         return m[key] = op1 || op2;
