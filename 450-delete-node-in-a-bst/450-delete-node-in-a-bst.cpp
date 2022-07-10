@@ -11,43 +11,48 @@
  */
 class Solution {
 public:
-    TreeNode* deleteNode(TreeNode* root, int key) {
-        //leaf node , one child , two child
-        if(root == NULL){
-            return NULL;
+    
+    TreeNode* now(TreeNode* root, int key) {
+        if(root->left == NULL) {
+            return root->right;
+        }else if(root->right == NULL) {
+            return root->left;
         }
         
-        if(root->val > key){
-            root->left = deleteNode(root->left,key);
-        }else if(root->val < key){
-            root->right = deleteNode(root->right,key);
-        }else{
-            //is leaf node
-            if(root->left == NULL and root->right == NULL){
-                delete root;
-                return NULL;//good practise
-            }else if(root->left == NULL){//for one child
-                TreeNode* temp = root->right;
-                root->right = NULL;
-                delete root;
-                return temp;
-            }else if(root->right == NULL){//for one child
-                TreeNode* temp = root->left;
-                root->left = NULL;
-                delete root;
-                return temp;
-            }else{//for two child
-                TreeNode* mini = root->right;
-                while(mini->left){ // find replacement and delete using recursion
-                    mini = mini->left;
-                }
-                root->val = mini->val;
-                root->right = deleteNode(root->right,mini->val);
-                return root;
-            }   
+        TreeNode* r = root->right;
+        TreeNode* l = root->left;
+        // cout<<l->val<<" "<<r->val<<endl;
+        while(l->right) {
+            l = l->right;
         }
         
-        return root;
-        
+        l->right = r;
+        root->right = NULL;
+        return root->left;
     }
+    
+    
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(!root) return NULL;
+        if(root->val == key) {
+            return now(root,key);
+        }
+        TreeNode* temp = root;
+        while(temp) {
+            if(temp->val > key) {
+                if(temp->left and temp->left->val == key) {
+                    temp->left = now(temp->left, key);
+                }else {
+                    temp = temp->left;
+                }
+            }else {
+                if(temp->right and temp->right->val == key) {
+                    temp->right = now(temp->right, key);
+                }else {
+                    temp = temp->right;
+                }
+            }
+        }
+        return root;
+    } 
 };
