@@ -1,42 +1,31 @@
 class Solution {
 public:
-    set<vector<int>> uniqueCombinations;
-    
-    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+    vector<vector<int>> fourSum(vector<int>& a, int t) {
         
-        uniqueCombinations.clear();
+        sort(begin(a), end(a));
         vector<vector<int>> ans;
-        int n = nums.size(), i, j, k, l, searchValue;
-        if( n<=3 ) return {};
-        
-        sort(nums.begin(), nums.end());
-        
-        for(int i=0;i<n;i++){
-            
-            for(int j=i+1;j<n;j++){
-                searchValue = target - (nums[i] + nums[j]);
-                k = j+1, l = n-1;
-                findTwoSum(searchValue, i, j, k, l, nums);
+        int n = a.size();
+        for(int i = 0; i < n; i++) {
+            for(int j = i+1; j < n; j++) {
+                int64_t sum = t;
+                sum -= a[i]; // we need to find sum using 2 pointer
+                sum -= a[j];
+                int left = j+1, right = n-1;
+                while(left < right) {
+                    int64_t l_r = a[left] + a[right];
+                    if(l_r < sum) left++;
+                    else if(l_r > sum) right--;
+                    else {
+                        ans.push_back({a[i],a[j],a[left],a[right]});
+                        int l = a[left], r = a[right];
+                        while(left < right and a[left] == l) left++;
+                        while(left < right and a[right] == r) right--;
+                    }
+                }   
+                while(j+1 < n and a[j+1] == a[j]) j++;
             }
-        }
-        
-        for(auto &combination : uniqueCombinations){
-            ans.push_back(combination);
+            while(i+1 < n and a[i+1] == a[i]) i++;
         }
         return ans;
-    }
-    
-    
-    void findTwoSum(int searchValue, int &i, int &j, int &k, int &l, vector<int> &nums){
-        
-        int sum;
-        while(k<l){
-            
-            sum = (nums[k]+nums[l]);
-            if( searchValue == sum+1-1)
-                uniqueCombinations.insert({nums[i], nums[j], nums[k], nums[l]}), k++;
-            else if( sum < searchValue ) k++;
-            else l--;
-        }
     }
 };
