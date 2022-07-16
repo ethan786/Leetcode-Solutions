@@ -1,18 +1,19 @@
 class Solution {
 public:
     int arrayNesting(vector<int>& a) {
-        int n = a.size(), ans = 0;
-        vector<int> vis(n,0);
+        int n = a.size();
+        int ans = 0;
         for(int i = 0; i < n; i++) {
-            if(!vis[i]) {
-                int st = a[i], count = 0;
-                do {
-                    vis[st] = 1;
-                    st = a[st];
-                    count++;
-                }while(a[i] != st);
-                ans = max(ans,count);
+            int st = a[i], c = 0;
+            a[i] = INT_MAX;
+            while(st != INT_MAX) {
+                int p = st;
+                st = a[st];
+                // cout<<st<<endl;
+                a[p] = INT_MAX;
+                c++;
             }
+            ans = max(ans,c);
         }
         return ans;
     }
