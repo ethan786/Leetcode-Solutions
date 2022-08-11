@@ -1,22 +1,17 @@
 class Solution {
 public:
-    bool winnerSquareGame(int n) {
-        if(n==0)
-            return false;
-			
-        vector<bool> dp(n+1, false);        
-        for(int i=1; i<=n; i++)
-        {
-            for(int j=1; j*j<=i; j++)
-            {
-                if(dp[i-(j*j)]==false)
-                {
-                    dp[i] = true;
-                    break;
-                }
-            }
+    vector<int> dp;
+    int fun(int n) {
+        if(n == 0) return false;
+        if(dp[n] != -1) return dp[n];
+        for(int i = 1; i*i <= n; i++) {
+            if(!fun(n-i*i)) return dp[n] = true;
         }
-        
-        return dp[n];
+        return dp[n] = false;
+    }
+    
+    bool winnerSquareGame(int n) {
+        dp.resize(n+1,-1);
+        return fun(n);
     }
 };
