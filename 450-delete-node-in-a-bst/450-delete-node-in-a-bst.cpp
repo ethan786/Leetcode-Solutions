@@ -12,47 +12,47 @@
 class Solution {
 public:
     
-    TreeNode* now(TreeNode* root, int key) {
-        if(root->left == NULL) {
-            return root->right;
-        }else if(root->right == NULL) {
-            return root->left;
-        }
-        
-        TreeNode* r = root->right;
-        TreeNode* l = root->left;
-        // cout<<l->val<<" "<<r->val<<endl;
-        while(l->right) {
-            l = l->right;
-        }
-        
-        l->right = r;
-        root->right = NULL;
-        return root->left;
-    }
-    
-    
     TreeNode* deleteNode(TreeNode* root, int key) {
-        if(!root) return NULL;
+        if(!root) return root;
         if(root->val == key) {
-            return now(root,key);
+            return helper(root);
         }
-        TreeNode* temp = root;
-        while(temp) {
-            if(temp->val > key) {
-                if(temp->left and temp->left->val == key) {
-                    temp->left = now(temp->left, key);
+        TreeNode* dummy = root;
+        while(root) {
+            if(root->val > key) {
+                if(root->left and root->left->val == key) {
+                    root->left = helper(root->left);
                 }else {
-                    temp = temp->left;
+                    root = root->left;
                 }
             }else {
-                if(temp->right and temp->right->val == key) {
-                    temp->right = now(temp->right, key);
+                if(root->right and root->right->val == key) {
+                    root->right = helper(root->right);
                 }else {
-                    temp = temp->right;
+                    root = root->right;
                 }
             }
         }
+        return dummy;
+    }
+    
+    TreeNode* helper(TreeNode* root) {
+        if(!root->left) {
+            return root->right;
+        }else if(!root->right){
+            return root->left;
+        }
+        TreeNode* left = root->left;
+        TreeNode* right = root->right;
+        TreeNode* extremeRight = findLast(left);
+        extremeRight->right = right;
+        return root->left;
+    }
+    
+    TreeNode* findLast(TreeNode* root) {
+        while(root->right) {
+            root = root->right;
+        }
         return root;
-    } 
+    }
 };
